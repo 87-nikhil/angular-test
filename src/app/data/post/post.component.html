@@ -1,0 +1,50 @@
+<div class="ml_160">
+
+<app-header></app-header>
+
+<!-- all Data -->
+<div *ngIf="!showDetails">
+    <div class="card-body">
+        <div class="table-responsive">
+          <div>
+            <table class="table align-items-center">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">
+                    #
+                  </th>
+                  <th scope="col">
+                    Title
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <tr *ngFor="let data of paginateData; let i=index">
+                    <td>{{((page-1) * limit) + (i+1)}}</td>
+                  <td><a target="_blank" (click)="getDetails(data.id)">{{data.title}}</a> </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    <div class="col-12 pegBtm" *ngIf="totalcount > limit">
+        <ngb-pagination class="float-right" [(page)]="page" [pageSize]="limit" [collectionSize]="totalcount"
+          [maxSize]="2" (pageChange)="pageChange($event)" [directionLinks]="(totalcount > (limit * 4))">
+          <ng-template ngbPaginationPrevious><i class="fa fa-chevron-left" aria-hidden="true"></i></ng-template>
+          <ng-template ngbPaginationNext><i class="fa fa-chevron-right" aria-hidden="true"></i></ng-template>
+        </ngb-pagination>
+    </div>
+</div>
+
+<!-- Details of data -->
+<div *ngIf="showDetails">
+  <a class="back-btm" target="_blank" (click)="back()">back</a>
+    <div class="ml_10">
+        <p>id: {{details.id}}</p>
+        <p>title: {{details.title}}</p>
+        <p>body: {{details.body}}</p>
+    </div>
+</div>
+    
+</div>

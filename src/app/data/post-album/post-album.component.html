@@ -1,0 +1,61 @@
+<div class="ml_160">
+    <app-header></app-header>
+
+    <div *ngIf="!showDetails">
+        <div class="col-md-4 hero-search">
+            <input list="albumList" autocomplete="off" type="text" class="form-control search-input position-relative" aria-describedby="egfdp"  (keyup)='changed($event);' name="title" placeholder="Enter Album title..." >
+            <datalist id="albumList">
+                <option *ngFor="let item of allData" [value]="item.title">
+            </datalist>
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <div class="table-responsive">
+                  <div>
+                    <table class="table align-items-center">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">
+                            #
+                          </th>
+                          <th scope="col">
+                            Title
+                          </th>
+                          <th scope="col">
+                            photo
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="list">
+                        <tr *ngFor="let data of paginateData; let i=index">
+                            <td>{{((page-1) * limit) + (i+1)}}</td>
+                          <td><a target="_blank" (click)="getDetails(data)">{{data.title}}</a> </td>
+                          <td><img class="img" [src]="data.thumbnailUrl" alt=""></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 pegbtm" *ngIf="totalcount > limit">
+            <ngb-pagination class="float-right" [(page)]="page" [pageSize]="limit" [collectionSize]="totalcount"
+              [maxSize]="2" (pageChange)="pageChange($event)" [directionLinks]="(totalcount > (limit * 4))">
+              <ng-template ngbPaginationPrevious><i class="fa fa-chevron-left" aria-hidden="true"></i></ng-template>
+              <ng-template ngbPaginationNext><i class="fa fa-chevron-right" aria-hidden="true"></i></ng-template>
+            </ngb-pagination>
+        </div>
+    </div>
+    
+    <!-- Details of data -->
+    <div *ngIf="showDetails">
+        <a class="back-btm" target="_blank" (click)="back()">back</a>
+        <div class="ml_10">
+            <p>id: {{detailsOfAlbum.id}}</p>
+            <p>title: {{detailsOfAlbum.title}}</p>
+            <p>img: <img class="img" [src]="detailsOfAlbum.thumbnailUrl" alt=""></p>
+        </div>
+    </div>
+    
+</div>
+    
